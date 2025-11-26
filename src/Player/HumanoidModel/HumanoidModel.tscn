@@ -45,6 +45,7 @@
 [ext_resource type="Script" path="res://src/Player/Moves/Run.gd" id="35_61fud"]
 [ext_resource type="Script" path="res://src/Player/Moves/Sprint.gd" id="36_ep40x"]
 [ext_resource type="Script" path="res://src/Player/Moves/JumpRun.gd" id="37_x72nu"]
+[ext_resource type="Script" uid="uid://docmyc4c1o5eh" path="res://src/Player/Moves/JumpIdle.gd" id="jump_idle_script"]
 [ext_resource type="Script" path="res://src/Player/Moves/JumpSprint.gd" id="38_jhd3k"]
 [ext_resource type="Script" path="res://src/Player/Moves/Midair.gd" id="39_gdq10"]
 [ext_resource type="Script" path="res://src/Player/Moves/LandingRun.gd" id="40_j5e1a"]
@@ -5055,6 +5056,14 @@ move_name = "sprint"
 priority = 4
 backend_animation = "sprint_params"
 tracking_angular_speed = 15.0
+
+[node name="JumpIdle" type="Node" parent="States"]
+script = ExtResource("jump_idle_script")
+animation = "midair"
+move_name = "jump_idle"
+priority = 10
+backend_animation = "midair_params"
+stamina_cost = 10.0
 
 [node name="JumpRun" type="Node" parent="States"]
 script = ExtResource("37_x72nu")

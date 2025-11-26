@@ -14,7 +14,7 @@ class_name HumanoidStates
 @export var model : PlayerModel
 #@export var left_wrist : BoneAttachment3D
 
-var moves : Dictionary # { string : Move }, where string is Move heirs name
+var moves : Dictionary = {}
 
 
 func accept_moves():

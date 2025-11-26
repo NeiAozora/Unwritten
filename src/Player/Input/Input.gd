@@ -24,8 +24,10 @@ func gather_input() -> InputPackage:
 	if Input.is_action_pressed("jump"):
 		if new_input.actions.has("sprint"):
 			new_input.actions.append("jump_sprint")
-		else:
+		elif new_input.actions.has("walk") or new_input.input_direction != Vector2.ZERO:
 			new_input.actions.append("jump_run")
+		else:
+			new_input.actions.append("jump_idle")
 	
 	if Input.is_action_just_pressed("light_attack"):
 		new_input.combat_actions.append("light_attack_pressed")
