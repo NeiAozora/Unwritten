@@ -16,6 +16,8 @@ script = ExtResource("1_1ax3b")
 [node name="Visuals" parent="." instance=ExtResource("2_yjnpd")]
 
 [node name="Model" parent="." instance=ExtResource("3_b4ws5")]
+base_health = 2000.0
+base_stamina = 200.0
 
 [node name="Input" type="Node" parent="."]
 script = ExtResource("4_k1mdb")

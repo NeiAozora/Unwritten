@@ -5,6 +5,9 @@ class_name PlayerModel
 @export var base_health : float = 100
 @export var base_stamina : float = 100
 
+@export_group("Death Settings")
+@export var permanent_death_enabled : bool = false  ## If enabled, enemy stays dead and won't respawn
+
 var jump_count = 0
 const MAX_JUMPS = 2
 

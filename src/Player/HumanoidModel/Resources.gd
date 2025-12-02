@@ -2,7 +2,7 @@ extends Node
 class_name HumanoidResources
 
 
-@export var god_mode : bool = true
+@export var god_mode : bool = false
 
 @export var health : float = 100
 @export var max_health : float = 100
