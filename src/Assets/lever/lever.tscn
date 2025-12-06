@@ -1,16 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://b1svudxu8jkq8"]
+[gd_scene load_steps=7 format=3 uid="uid://b1svudxu8jkq8"]
 
 [ext_resource type="PackedScene" uid="uid://dab5xvesbgyls" path="res://src/Assets/lever/untitled.gltf" id="1_stqgt"]
-
-[sub_resource type="Animation" id="Animation_stqgt"]
-resource_name = "turn_on"
-tracks/0/type = "rotation_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("button_03_mdl/Skeleton3D:switch")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0.371, 0, 0.929, 0.3, 1, -7.1774796e-22, 0.37087348, 0, 0.92868334, 0.73333335, 1, 0, -0.371, 0, 0.929, 1, 1, 4.2337213e-22, -0.37087354, 0, 0.92868334)
 
 [sub_resource type="Animation" id="Animation_ifkpi"]
 length = 0.001
@@ -32,12 +22,25 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array(0, 1, 0, -0.371, 0, 0.929, 0.33, 1, 4.2337213e-22, -0.37087354, 0, 0.92868334, 0.62, 1, 0, 0.371, 0, 0.929, 1, 1, -7.1774796e-22, 0.37087348, 0, 0.92868334)
 
+[sub_resource type="Animation" id="Animation_stqgt"]
+resource_name = "turn_on"
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("button_03_mdl/Skeleton3D:switch")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0.371, 0, 0.929, 0.3, 1, -7.1774796e-22, 0.37087348, 0, 0.92868334, 0.73333335, 1, 0, -0.371, 0, 0.929, 1, 1, 4.2337213e-22, -0.37087354, 0, 0.92868334)
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_esobx"]
 _data = {
 &"RESET": SubResource("Animation_ifkpi"),
 &"turn_off": SubResource("Animation_ba5ql"),
 &"turn_on": SubResource("Animation_stqgt")
 }
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hitbox"]
+size = Vector3(0.23522949, 0.22290039, 0.5)
 
 [node name="untitled" instance=ExtResource("1_stqgt")]
 transform = Transform3D(5.4, 0, 0, 0, 5.4, 0, 0, 0, 5.4, 0, 0, 0)
@@ -49,3 +52,10 @@ bones/1/rotation = Quaternion(0, 0, 0, 1)
 libraries = {
 &"": SubResource("AnimationLibrary_esobx")
 }
+
+[node name="Hitbox" type="Area3D" parent="." index="5"]
+collision_mask = 255
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox" index="0"]
+transform = Transform3D(0.9999846, 0, 0, 0, 0.9999846, 0, 0, 0, 0.9999846, -0.028380955, 0.11144983, 0)
+shape = SubResource("BoxShape3D_hitbox")
