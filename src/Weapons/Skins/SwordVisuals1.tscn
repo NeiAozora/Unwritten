@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://bb0o3byg0f0uh"]
+[gd_scene load_steps=3 format=3 uid="uid://bb0o3byg0f0uh"]
+
+[ext_resource type="PackedScene" uid="uid://bidfb2438i78a" path="res://src/Assets/Sword/ALucius_Sword.fbx" id="1_eyqut"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_310c4"]
 albedo_color = Color(0.752941, 0.752941, 0.752941, 1)
@@ -8,5 +10,9 @@ metallic = 1.0
 
 [node name="Core" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.475717, 0)
+visible = false
 material_override = SubResource("StandardMaterial3D_310c4")
 size = Vector3(0.05, 1, 0.05)
+
+[node name="ALucius_Sword" parent="." instance=ExtResource("1_eyqut")]
+transform = Transform3D(0.76, 0, 0, 0, -0.76, 1.1475681e-07, 0, -1.1475681e-07, -0.76, 0, 0.25901765, 0)

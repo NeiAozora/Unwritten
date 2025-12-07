@@ -32,7 +32,7 @@ window/size/mode=3
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/cyclops_level_builder/plugin.cfg", "res://addons/dialogic/plugin.cfg")
+enabled=PackedStringArray("res://addons/Godot-Mixamo-Animation-Retargeter/addons/mixamo_animation_retargeter/plugin.cfg", "res://addons/cyclops_level_builder/plugin.cfg", "res://addons/dialogic/plugin.cfg")
 
 [input]
 
