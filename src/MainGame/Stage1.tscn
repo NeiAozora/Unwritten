@@ -1,15 +1,38 @@
-[gd_scene load_steps=4 format=3 uid="uid://ccjrvycgp04o5"]
+[gd_scene load_steps=9 format=3 uid="uid://ccjrvycgp04o5"]
 
 [ext_resource type="PackedScene" uid="uid://drjqcoul7pinv" path="res://src/Player/Player.tscn" id="2_7mt63"]
 [ext_resource type="PackedScene" uid="uid://dcf0eohhud0s" path="res://src/Player/Enemy.tscn" id="3_5x8vi"]
 [ext_resource type="PackedScene" uid="uid://cx5kmibjcm5lu" path="res://src/WorldMap/world.scn" id="3_xfnad"]
+[ext_resource type="PackedScene" uid="uid://b02q6jkltenw" path="res://src/MapAssets/objectAssets/awan-level1.glb" id="4_7mt63"]
+[ext_resource type="Script" uid="uid://2f1ya3cmux7f" path="res://src/Scripts/cloud-obstacle.gd" id="5_5x8vi"]
+[ext_resource type="PackedScene" uid="uid://b1svudxu8jkq8" path="res://src/Assets/lever/lever.tscn" id="6_n8xrq"]
+[ext_resource type="Script" uid="uid://cf14f3gohtofa" path="res://src/Scripts/lever.gd" id="7_t7u0y"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7mt63"]
+size = Vector3(9.48, 2.26, 4.39)
 
 [node name="Stage1" type="Node3D"]
 
 [node name="player" parent="." instance=ExtResource("2_7mt63")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09192169, 1.8559294, -0.022575974)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62.380257, 5.9587107, 46.7015)
 
 [node name="enemy" parent="." instance=ExtResource("3_5x8vi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.89032, 1.8559294, -4)
 
 [node name="world" parent="." instance=ExtResource("3_xfnad")]
+
+[node name="Moving-Cloud-1" type="AnimatableBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.834206, -10.654402, 34.125217)
+script = ExtResource("5_5x8vi")
+amplitude = 7.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Moving-Cloud-1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.702087, 8.169643, 21.038681)
+shape = SubResource("BoxShape3D_7mt63")
+
+[node name="awan-level1" parent="Moving-Cloud-1" instance=ExtResource("4_7mt63")]
+
+[node name="lever" parent="." node_paths=PackedStringArray("clouds") instance=ExtResource("6_n8xrq")]
+transform = Transform3D(-3.457571e-07, -7.91, 3.457571e-07, 0, -3.457571e-07, -7.91, 7.91, -3.457571e-07, 1.5113522e-14, 66.14062, 6.412453, 46.998714)
+script = ExtResource("7_t7u0y")
+clouds = [NodePath("../Moving-Cloud-1"), null]
