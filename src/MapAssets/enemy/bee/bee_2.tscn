@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b16o2o66x3ahl"]
+
+[ext_resource type="PackedScene" uid="uid://x2ttrsg8lff6" path="res://src/MapAssets/enemy/bee/bee.glb" id="1_qmxub"]
+
+[node name="bee2" instance=ExtResource("1_qmxub")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38424408, 0)
+
+[node name="bee" parent="." index="0"]
+transform = Transform3D(-0.013764419, 0.36627075, 1.5848384e-08, -0.117955685, -0.04274066, -1.8493717e-09, 8.438126e-16, 4.9545626e-08, -0.118756056, 0.71283513, 0.026114583, 0)

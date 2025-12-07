@@ -10,6 +10,7 @@ class_name AIInputGatherer
 @export var sprint_distance: float = 5.0
 @export var attack_cooldown: float = 3.0 # seconds between attack attempts
 @export var strafe_distance: float = 3.5 # start strafing/dodging instead of closing in
+@export var active_radius: float = 15.0 # Max distance to chase/detect target
 
 # Small tolerance to stop jittering when very close to the target.
 @export var stop_distance: float = 0.5
@@ -51,7 +52,11 @@ func gather_input() -> InputPackage:
 		direction.y = 0
 		distance = direction.length()
 	
-	if distance > stop_distance and direction != Vector3.ZERO:
+		direction.y = 0
+		distance = direction.length()
+	
+	# Only chase if within active radius
+	if distance <= active_radius and distance > stop_distance and direction != Vector3.ZERO:
 		input.actions.append("walk")
 		
 		# Sprint if far enough.
