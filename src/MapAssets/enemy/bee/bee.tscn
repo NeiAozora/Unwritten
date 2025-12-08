@@ -1,10 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://b16o2o66x3ahl"]
+[gd_scene load_steps=12 format=3 uid="uid://8cj7achnaca"]
 
-[ext_resource type="PackedScene" uid="uid://x2ttrsg8lff6" path="res://src/MapAssets/enemy/bee/bee.glb" id="2_visuals"]
-[ext_resource type="Script" uid="uid://cdfotk8q5ixjj" path="res://src/MapAssets/enemy/bee/BeeVisuals.gd" id="5_visuals_script"]
-[ext_resource type="Script" uid="uid://dcpr8rygwakx6" path="res://src/Player/EnemyHealthBillboard.gd" id="6_billboard"]
+[ext_resource type="PackedScene" uid="uid://x2ttrsg8lff6" path="res://src/MapAssets/enemy/bee/bee.glb" id="1_e614h"]
+[ext_resource type="Script" uid="uid://44nq1wsxhkd6" path="res://src/MapAssets/enemy/bee/SimpleBeeEnemy.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://dcpr8rygwakx6" path="res://src/Player/EnemyHealthBillboard.gd" id="3_billboard"]
+[ext_resource type="Script" uid="uid://d0338ab3o3uoh" path="res://src/Scripts/BeeHurtbox.gd" id="4_hurtbox"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1r6vr"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_bee"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hurtbox"]
+radius = 0.8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qx63c"]
 bg_color = Color(0.05, 0.08, 0.05, 0.8)
 border_width_left = 1
 border_width_top = 1
@@ -12,10 +18,10 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.05, 0.15, 0.05, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iittr"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7avy0"]
 bg_color = Color(0.6, 0.15, 0.15, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n0m46"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wt5dd"]
 bg_color = Color(0.05, 0.08, 0.05, 0.8)
 border_width_left = 1
 border_width_top = 1
@@ -23,7 +29,7 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.05, 0.15, 0.05, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ipam3"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ovuti"]
 bg_color = Color(0.12, 0.35, 0.12, 1)
 border_width_left = 1
 border_width_top = 1
@@ -34,15 +40,36 @@ border_color = Color(0.05, 0.15, 0.05, 1)
 [sub_resource type="ViewportTexture" id="ViewportTexture_health"]
 viewport_path = NodePath("HealthBillboard/SubViewport")
 
-[node name="Bee2" type="Node3D"]
-script = ExtResource("5_visuals_script")
+[node name="bee2" type="CharacterBody3D" groups=["enemy"]]
+script = ExtResource("2_script")
 
-[node name="Visuals" parent="." instance=ExtResource("2_visuals")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, -1.6728295, 0)
+[node name="bee" parent="." instance=ExtResource("1_e614h")]
+transform = Transform3D(-3.523138e-08, 0, 0.806, 0, 0.806, 0, -0.806, 0, -3.523138e-08, 0, -1.3329271, 0)
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_desired_distance = 0.5
+target_desired_distance = 0.5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("SphereShape3D_bee")
+
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("4_hurtbox")
+processor = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("SphereShape3D_hurtbox")
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
 
 [node name="HealthBillboard" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7336996, 0)
-script = ExtResource("6_billboard")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 show_distance = 15.0
 
 [node name="SubViewport" type="SubViewport" parent="HealthBillboard"]
@@ -66,9 +93,9 @@ offset_top = 4.0
 offset_right = 156.0
 offset_bottom = 28.0
 theme_override_colors/font_color = Color(1, 1, 1, 0)
-theme_override_styles/background = SubResource("StyleBoxFlat_1r6vr")
-theme_override_styles/fill = SubResource("StyleBoxFlat_iittr")
-value = 97.22
+theme_override_styles/background = SubResource("StyleBoxFlat_qx63c")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7avy0")
+value = 92.39
 show_percentage = false
 
 [node name="ProgressBar" type="ProgressBar" parent="HealthBillboard/SubViewport/Control"]
@@ -80,9 +107,9 @@ offset_right = 156.0
 offset_bottom = 28.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 14
-theme_override_styles/background = SubResource("StyleBoxFlat_n0m46")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ipam3")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/background = SubResource("StyleBoxFlat_wt5dd")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ovuti")
 value = 100.0
 show_percentage = false
 

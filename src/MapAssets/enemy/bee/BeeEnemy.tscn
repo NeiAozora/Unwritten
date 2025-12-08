@@ -1,131 +1,38 @@
-[gd_scene load_steps=12 format=3 uid="uid://b3vfvf51qxhry"]
+[gd_scene load_steps=6 format=3 uid="uid://b3vfvf51qxhry"]
 
-[ext_resource type="Script" uid="uid://dbnh7vib2rnjj" path="res://src/Scripts/bee-enemy.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://bepxcserhjcny" path="res://src/Player/Player.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://b16o2o66x3ahl" path="res://src/MapAssets/enemy/bee/bee_2.tscn" id="2_visuals"]
-[ext_resource type="Script" uid="uid://b2gyk22kivboi" path="res://src/Scripts/SimpleHealthBillboard.gd" id="3_billboard"]
-[ext_resource type="Script" uid="uid://d0338ab3o3uoh" path="res://src/Scripts/BeeHurtbox.gd" id="4_hurtbox"]
+[ext_resource type="PackedScene" uid="uid://eec5ujuowf51" path="res://src/Player/HumanoidModel/HumanoidModel.tscn" id="3_model"]
+[ext_resource type="Script" uid="uid://kv5v0xdok0rm" path="res://src/Player/Moves/AIInput.gd" id="4_aiinput"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_bee"]
 radius = 0.66179407
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0k344"]
-bg_color = Color(0.05, 0.08, 0.05, 0.8)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.05, 0.15, 0.05, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w6h7f"]
-bg_color = Color(0.6, 0.15, 0.15, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uo1qm"]
-bg_color = Color(0.05, 0.08, 0.05, 0.8)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.05, 0.15, 0.05, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lmit4"]
-bg_color = Color(0.12, 0.35, 0.12, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.05, 0.15, 0.05, 1)
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_health"]
-viewport_path = NodePath("HealthBillboard/SubViewport")
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_hurtbox"]
-radius = 0.923958
-
-[node name="BeeEnemy" type="CharacterBody3D"]
+[node name="BeeEnemy" type="CharacterBody3D" groups=["enemy"]]
 script = ExtResource("1_script")
 
-[node name="bee2" parent="." instance=ExtResource("2_visuals")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2943383, 0)
+[node name="Visuals" parent="." instance=ExtResource("2_visuals")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.67180824, 0)
-shape = SubResource("SphereShape3D_bee")
+[node name="Model" parent="." instance=ExtResource("3_model")]
+visible = false
+is_enemy = true
+base_health = 50.0
+base_stamina = 50.0
+permanent_death_enabled = true
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+[node name="Input" type="Node" parent="." node_paths=PackedStringArray("navigation_agent")]
+script = ExtResource("4_aiinput")
+navigation_agent = NodePath("../NavigationAgent")
+target_group = "player"
+
+[node name="NavigationAgent" type="NavigationAgent3D" parent="."]
 path_desired_distance = 0.5
 path_max_distance = 2.0
 
-[node name="HealthBillboard" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
-script = ExtResource("3_billboard")
+[node name="Collider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.672, 0)
+shape = SubResource("SphereShape3D_bee")
 
-[node name="SubViewport" type="SubViewport" parent="HealthBillboard"]
-transparent_bg = true
-handle_input_locally = false
-size = Vector2i(160, 32)
-render_target_clear_mode = 2
-render_target_update_mode = 3
-
-[node name="Control" type="Control" parent="HealthBillboard/SubViewport"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 160.0
-offset_bottom = 32.0
-
-[node name="DamageBar" type="ProgressBar" parent="HealthBillboard/SubViewport/Control"]
-modulate = Color(0.8, 0.1, 0.1, 1)
-layout_mode = 1
-offset_left = 4.0
-offset_top = 4.0
-offset_right = 156.0
-offset_bottom = 28.0
-theme_override_colors/font_color = Color(1, 1, 1, 0)
-theme_override_styles/background = SubResource("StyleBoxFlat_0k344")
-theme_override_styles/fill = SubResource("StyleBoxFlat_w6h7f")
-value = 2.87
-show_percentage = false
-
-[node name="ProgressBar" type="ProgressBar" parent="HealthBillboard/SubViewport/Control"]
-modulate = Color(1, 0.2, 0.2, 1)
-layout_mode = 1
-offset_left = 4.0
-offset_top = 4.0
-offset_right = 156.0
-offset_bottom = 28.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 14
-theme_override_styles/background = SubResource("StyleBoxFlat_uo1qm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_lmit4")
-value = 100.0
-show_percentage = false
-
-[node name="Value" type="Label" parent="HealthBillboard/SubViewport/Control/ProgressBar"]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 2.0
-offset_right = 148.0
-offset_bottom = 22.0
-theme_override_font_sizes/font_size = 12
-text = "0 / 0"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Sprite3D" type="Sprite3D" parent="HealthBillboard"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.013979912, 0)
-modulate = Color(1, 1, 1, 0.95)
-pixel_size = 0.006
-billboard = 1
-texture_filter = 2
-texture = SubResource("ViewportTexture_health")
-
-[node name="Hurtbox" type="Area3D" parent="." node_paths=PackedStringArray("processor")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65093744, -0.06246209)
-collision_layer = 0
-collision_mask = 4
-script = ExtResource("4_hurtbox")
-processor = NodePath("..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.54749024, 0)
-shape = SubResource("SphereShape3D_hurtbox")
+[node name="CameraMount" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.902, 0)

@@ -48,5 +48,7 @@ func on_exit_state():
 
 
 func on_enter_state():
+	# Ensure weapon is fresh for this new attack
+	player.model.active_weapon.hitbox_ignore_list.clear() # Added clear
 	stamina_cost = attack_stamina_cost
 	player.visuals.flash_attack()

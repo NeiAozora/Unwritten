@@ -1,5 +1,6 @@
-[gd_scene load_steps=41 format=3 uid="uid://ccjrvycgp04o5"]
+[gd_scene load_steps=44 format=3 uid="uid://ccjrvycgp04o5"]
 
+[ext_resource type="PackedScene" uid="uid://8cj7achnaca" path="res://src/MapAssets/enemy/bee/bee.tscn" id="1_73eqi"]
 [ext_resource type="PackedScene" uid="uid://drjqcoul7pinv" path="res://src/Player/Player.tscn" id="2_7mt63"]
 [ext_resource type="PackedScene" uid="uid://dcf0eohhud0s" path="res://src/Player/Enemy.tscn" id="3_5x8vi"]
 [ext_resource type="PackedScene" uid="uid://cx5kmibjcm5lu" path="res://src/WorldMap/world.scn" id="3_xfnad"]
@@ -12,11 +13,10 @@
 [ext_resource type="Script" uid="uid://di2niteklmujg" path="res://addons/cyclops_level_builder/resources/data_vector_int.gd" id="10_084w1"]
 [ext_resource type="Script" uid="uid://cghh55ia1gk4l" path="res://addons/cyclops_level_builder/resources/data_vector_float.gd" id="11_22fmn"]
 [ext_resource type="Script" uid="uid://cdno2kbxy7x0t" path="res://addons/cyclops_level_builder/resources/mesh_vector_data.gd" id="12_g70w0"]
-[ext_resource type="Script" path="res://src/Scripts/horizontal-platform.gd" id="13_m73e5"]
-[ext_resource type="PackedScene" uid="uid://b3vfvf51qxhry" path="res://src/MapAssets/enemy/bee/BeeEnemy.tscn" id="14_084w1"]
+[ext_resource type="Script" uid="uid://dq8thuvciiv8s" path="res://src/Scripts/horizontal-platform.gd" id="13_m73e5"]
 [ext_resource type="PackedScene" uid="uid://04y66fw83ucx" path="res://src/ModularAssets/meja_buku.tscn" id="15_22fmn"]
 [ext_resource type="PackedScene" uid="uid://bjxta848gw2cn" path="res://src/ModularAssets/batu.tscn" id="16_g70w0"]
-[ext_resource type="Script" path="res://src/Scripts/Rock-Obstacle.gd" id="17_nyloc"]
+[ext_resource type="Script" uid="uid://xd8g8id580un" path="res://src/Scripts/Rock-Obstacle.gd" id="17_nyloc"]
 [ext_resource type="Script" uid="uid://6yumj263pmwe" path="res://src/MainGame/Scripts/ganti_scene.gd" id="17_vlkwk"]
 [ext_resource type="Script" uid="uid://chiut7eymg84b" path="res://src/Dialog/Scripts/stage_1_timeline_1.gd" id="18_vevcq"]
 [ext_resource type="PackedScene" path="res://src/Interactables/Chest/Chest.tscn" id="20_73eqi"]
@@ -148,19 +148,28 @@ size = Vector3(8.5, 1, 5.25)
 [sub_resource type="BoxShape3D" id="BoxShape3D_nyloc"]
 size = Vector3(18, 1.75, 24)
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_73eqi"]
+vertices = PackedVector3Array(-30.925123, -2.4385066, -15.551699, -30.925123, -2.4385066, 17.448301, 4.574877, -2.4385066, 17.448301, 4.574877, -2.4385066, -15.551699)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+region_merge_size = 37.73
+
+[sub_resource type="BoxMesh" id="BoxMesh_73eqi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k8ro3"]
+
 [node name="Stage1" type="Node3D"]
 
-[node name="BeeEnemy" parent="." instance=ExtResource("14_084w1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 232.47478, 9.303343, 31.007936)
-
 [node name="player" parent="." instance=ExtResource("2_7mt63")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1212616, 6.0460997, 1.7020798)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 231.80319, 13.186607, 28.671122)
 
 [node name="enemy" parent="." instance=ExtResource("3_5x8vi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60.85968, 6.1059294, -1)
 
 [node name="world" parent="." instance=ExtResource("3_xfnad")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.035990715, 0.275095, 0.49212456)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5569105, 0.028366089, 0.93783)
+
+[node name="bee3" parent="world" instance=ExtResource("1_73eqi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6219177, -2.1402636, 6.6902885)
 
 [node name="Moving-Cloud-1" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.834206, -10.654402, 34.125217)
@@ -209,10 +218,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2623825, -0.25, -0.32217407
 shape = SubResource("BoxShape3D_roafh")
 
 [node name="Moving-Platform-2" type="AnimatableBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 77.16064, 16.98707, 23.80646)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 77.16064, 17.2397, 24.440338)
 script = ExtResource("13_m73e5")
 movement_axis = 1
-amplitude = 15.0
+amplitude = 15.1
 
 [node name="Block_1" type="Node3D" parent="Moving-Platform-2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -1, 0)
@@ -224,7 +233,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.62519073, -0.6788025, -0.1
 shape = SubResource("BoxShape3D_roafh")
 
 [node name="platform-lever" parent="Moving-Platform-2" node_paths=PackedStringArray("clouds") instance=ExtResource("6_n8xrq")]
-transform = Transform3D(-5.399028, 0, -0.10244174, 0, 5.3999996, 0, 0.10244174, 0, -5.399028, -1.0167999, -0.09936333, 0.03625679)
+transform = Transform3D(-5.399028, 0, -0.10244174, 0, 5.3999996, 0, 0.10244174, 0, -5.399028, -1.0173569, -0.11291504, 0.028165817)
 script = ExtResource("7_t7u0y")
 clouds = [NodePath("..")]
 
@@ -280,3 +289,24 @@ shape = SubResource("BoxShape3D_73eqi")
 
 [node name="Chest" parent="." instance=ExtResource("20_73eqi")]
 transform = Transform3D(-0.63089246, 0, 0.77587026, 0, 1, 0, -0.77587026, 0, -0.63089246, 82.735085, 18.003593, 45.299366)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 236.42212, 11.715874, 25.304733)
+navigation_mesh = SubResource("NavigationMesh_73eqi")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="NavigationRegion3D"]
+transform = Transform3D(36.505, 0, 0, 0, 0.175, 0, 0, 0, 33.92, -13.172623, -2.8510065, 0.9083004)
+mesh = SubResource("BoxMesh_73eqi")
+material = SubResource("StandardMaterial3D_k8ro3")
+
+[node name="bee2" parent="NavigationRegion3D" instance=ExtResource("1_73eqi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6219177, -2.1402636, 9.748901)
+speed = 3.0
+attack_cooldown = 4.0
+
+[node name="bee3" parent="NavigationRegion3D" instance=ExtResource("1_73eqi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.050507, -2.1402636, 1.6499424)
+speed = 4.0
+
+[node name="bee4" parent="NavigationRegion3D" instance=ExtResource("1_73eqi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.057129, -2.1402636, -3.1730747)

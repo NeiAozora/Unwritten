@@ -45,7 +45,7 @@ func gather_input() -> InputPackage:
 			var next_position = navigation_agent.target_position
 			if not navigation_agent.is_navigation_finished():
 				next_position = navigation_agent.get_next_path_position()
-			direction = next_position - navigation_agent.global_transform.origin
+			direction = next_position - owner_body.global_transform.origin
 		elif owner_body:
 			direction = target_pos - owner_body.global_transform.origin
 		
