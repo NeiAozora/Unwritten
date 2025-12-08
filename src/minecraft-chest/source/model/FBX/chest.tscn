@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2kcj7c4au1yd"]
+
+[ext_resource type="PackedScene" uid="uid://dxi7q578ujt6u" path="res://src/Assets/minecraft-chest/source/model/FBX/chest.fbx" id="1_qmlrf"]
+
+[node name="chest" instance=ExtResource("1_qmlrf")]

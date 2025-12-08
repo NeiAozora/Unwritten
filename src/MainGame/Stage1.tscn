@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://ccjrvycgp04o5"]
+[gd_scene load_steps=41 format=3 uid="uid://ccjrvycgp04o5"]
 
 [ext_resource type="PackedScene" uid="uid://drjqcoul7pinv" path="res://src/Player/Player.tscn" id="2_7mt63"]
 [ext_resource type="PackedScene" uid="uid://dcf0eohhud0s" path="res://src/Player/Enemy.tscn" id="3_5x8vi"]
@@ -12,12 +12,14 @@
 [ext_resource type="Script" uid="uid://di2niteklmujg" path="res://addons/cyclops_level_builder/resources/data_vector_int.gd" id="10_084w1"]
 [ext_resource type="Script" uid="uid://cghh55ia1gk4l" path="res://addons/cyclops_level_builder/resources/data_vector_float.gd" id="11_22fmn"]
 [ext_resource type="Script" uid="uid://cdno2kbxy7x0t" path="res://addons/cyclops_level_builder/resources/mesh_vector_data.gd" id="12_g70w0"]
-[ext_resource type="Script" path="res://src/Scripts/horizontal-platform.gd" id="13_m73e5"]
+[ext_resource type="Script" uid="uid://dq8thuvciiv8s" path="res://src/Scripts/horizontal-platform.gd" id="13_m73e5"]
 [ext_resource type="PackedScene" uid="uid://b3vfvf51qxhry" path="res://src/MapAssets/enemy/bee/BeeEnemy.tscn" id="14_084w1"]
 [ext_resource type="PackedScene" uid="uid://04y66fw83ucx" path="res://src/ModularAssets/meja_buku.tscn" id="15_22fmn"]
 [ext_resource type="PackedScene" uid="uid://bjxta848gw2cn" path="res://src/ModularAssets/batu.tscn" id="16_g70w0"]
+[ext_resource type="Script" uid="uid://xd8g8id580un" path="res://src/Scripts/Rock-Obstacle.gd" id="17_nyloc"]
 [ext_resource type="Script" uid="uid://6yumj263pmwe" path="res://src/MainGame/Scripts/ganti_scene.gd" id="17_vlkwk"]
 [ext_resource type="Script" uid="uid://chiut7eymg84b" path="res://src/Dialog/Scripts/stage_1_timeline_1.gd" id="18_vevcq"]
+[ext_resource type="PackedScene" path="res://src/Interactables/Chest/Chest.tscn" id="20_73eqi"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7mt63"]
 size = Vector3(9.48, 2.26, 4.39)
@@ -137,6 +139,9 @@ face_vertex_data = {
 &"vertex_index": SubResource("Resource_0fy4s")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_73eqi"]
+size = Vector3(4.2714844, 3.8394775, 4.3360596)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_vlkwk"]
 size = Vector3(8.5, 1, 5.25)
 
@@ -149,13 +154,13 @@ size = Vector3(18, 1.75, 24)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 232.47478, 9.303343, 31.007936)
 
 [node name="player" parent="." instance=ExtResource("2_7mt63")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.039444, 1.7940121, -0.086128235)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1212616, 6.0460997, 1.7020798)
 
 [node name="enemy" parent="." instance=ExtResource("3_5x8vi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60.85968, 6.1059294, -1)
 
 [node name="world" parent="." instance=ExtResource("3_xfnad")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.17728424, 0.0057344437, -0.22457123)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.035990715, 0.275095, 0.49212456)
 
 [node name="Moving-Cloud-1" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.834206, -10.654402, 34.125217)
@@ -227,7 +232,14 @@ clouds = [NodePath("..")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 224.5, 11.25, 35.5)
 
 [node name="Batu" parent="." instance=ExtResource("16_g70w0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 102.594505, 15, 13)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 102.594505, 10.249294, 13)
+script = ExtResource("17_nyloc")
+amplitude = 15.0
+speed = 8.0
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Batu"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0126953125, -0.06561279, -0.10443115)
+shape = SubResource("BoxShape3D_73eqi")
 
 [node name="gantiScene" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 225.25, 14.5, 38.5)
@@ -245,3 +257,26 @@ script = ExtResource("18_vevcq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.875, -1.75)
 shape = SubResource("BoxShape3D_nyloc")
 debug_color = Color(17.34272, 0, 13.821272, 0.9843137)
+
+[node name="Batu2" parent="." instance=ExtResource("16_g70w0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 116.07429, 9.680614, 12.457233)
+script = ExtResource("17_nyloc")
+amplitude = 15.0
+speed = 9.0
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Batu2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0126953125, -0.06561279, -0.10443115)
+shape = SubResource("BoxShape3D_73eqi")
+
+[node name="Batu3" parent="." instance=ExtResource("16_g70w0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 127.49233, 9.588718, 13)
+script = ExtResource("17_nyloc")
+amplitude = 15.0
+speed = 10.0
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Batu3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0126953125, -0.06561279, -0.10443115)
+shape = SubResource("BoxShape3D_73eqi")
+
+[node name="Chest" parent="." instance=ExtResource("20_73eqi")]
+transform = Transform3D(-0.63089246, 0, 0.77587026, 0, 1, 0, -0.77587026, 0, -0.63089246, 82.735085, 18.003593, 45.299366)
