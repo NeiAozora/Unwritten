@@ -18,6 +18,9 @@ func _ready():
 	print("BeeHurtbox ready! Processor: ", processor)
 
 func _physics_process(delta):
+	if not monitoring:
+		return
+		
 	var areas = get_overlapping_areas()
 	if areas.size() > 0:
 		for area in areas:
